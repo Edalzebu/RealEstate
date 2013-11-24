@@ -1,0 +1,26 @@
+﻿@using BootstrapSupport
+@model RealEstate.Web.Models.SellHouseModel
+
+<legend>Informacion de la casa</legend>
+    @using (Html.BeginForm("SellHouse", "Properties"))
+    {
+         @Html.ValidationSummary(true)
+        <fieldset class="form-horizontal">
+            
+            @foreach (var property in Model.VisibleProperties())
+            {
+                if (property.Name != "Imagen")
+                {
+                    using (Html.ControlGroupFor(property.Name))
+                    {
+                        @Html.Label(property.Name, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.Editor(property.Name, new { @class = "input-xlarge" })
+                            @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
+                        </div>
+                    }
+                }
+
+            }
+            </fieldset>
+    }

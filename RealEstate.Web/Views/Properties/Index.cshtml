@@ -1,0 +1,13 @@
+﻿@using Microsoft.Web.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/shared/_BootstrapLayout.narrow.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Quieres vender una propiedad?</h1>
+    <p class="lead">Nosotros somos tu solucion, registrate en la pagina para que te podamos ayudar mejor , no importa si eres en si una persona que solo quiere vender su casa a una persona que es un empresario y tiene trabajo que hacer.</p>
+    @Html.ActionLink("Registrarse","Register","Account",null, new { @class = "btn btn-success btn-large" })
+    
+
+</div>

@@ -1,0 +1,65 @@
+﻿@using BootstrapSupport
+@using Microsoft.Web.Mvc
+@model List<RealEstate.Web.Models.ListPropertiesModel>
+<h4>Propiedades</h4>
+<div style="text-align: right">
+    @Html.ActionLink("Vender Propiedad", "SellProperty", null, new { @class = "btn btn-success" })
+
+</div>
+<br>
+<table class="table table-striped">
+    <caption></caption>
+    
+    @{ int index = 0; }
+    @foreach (var model in Model)
+    {
+        ViewData[index.ToString()] = model;
+        <tr>
+            
+           
+        <td>
+            @{var modelo = model;}
+            
+        @Html.Image(@modelo.ImageUrl)
+            <br>
+             " @modelo.Nombre", @modelo.Colonia
+            <br>
+            <div style="text-align: center; width:150px; ">Vendedor: @Html.ActionLink(modelo.Owner, "GotoProfile", "Properties") </div>
+            <br>
+
+                    
+        </td>
+            
+            <td>
+                <div style="">
+                    Precio:@modelo.Precio
+                    <br>
+                    Lugar: @modelo.Ciudad , @modelo.Pais
+                    <br>
+                    Publicacion: @modelo.StartingDate
+                </div>
+                
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        Action
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @{
+                            @Html.TryPartial("_actions", model)
+                            var routevalues = model.GetIdValue();
+                            <li>@Html.ActionLink("Detalles ", "Property", routevalues)</li>
+                            <li>@Html.ActionLink("Portafolio del dueño", "Profile", routevalues)</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Reportar", "Report", routevalues)</li>
+
+                        }
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        index++;
+    }
+</table>
