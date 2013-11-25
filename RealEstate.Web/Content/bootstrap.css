@@ -6118,12 +6118,13 @@ a.badge:focus {
 }
 
 .hero-unit {
+    background-image: url(images/Paisaje1.jpg);
   padding: 60px;
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
-  color: inherit;
+  color: #eeeeee;
   background-color: #eeeeee;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;

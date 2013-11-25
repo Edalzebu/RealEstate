@@ -8,8 +8,9 @@
 <div style="text-align: right"> @Html.ActionLink("Registrarse", "Register", null, new { @class = "btn btn-success " })</div>
 <br>
 
-<div style="align-items: center;">
-    <div style=" width: 350px;">
+<div class="row">
+    
+    <div class="span4" style="margin-right: 0;">
 
         @using (@Html.BeginForm("LogIn", "Account", FormMethod.Post, new { @class = "form-signin" }))
         {
@@ -29,8 +30,8 @@
 
         }
     </div>
-    <div style="width: 300px;">
-        <img src="~/Content/images/banner-grandes-paisajes.jpg" width="800" height="200" alt="Una foto bonita que no cargo :(">
+    <div class="span4" style="margin-left:0;">
+        <img src="~/Content/images/Paisaje1.jpg" alt="Una foto bonita que no cargo :(">
     </div>
 
 </div>
