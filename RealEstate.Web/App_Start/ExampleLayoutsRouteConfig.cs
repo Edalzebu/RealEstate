@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using BootstrapMvcSample.Controllers;
 using NavigationRoutes;
+using RealEstate.Domain.Entities;
 using RealEstate.Web.Controllers;
 
 namespace BootstrapMvcSample
@@ -14,11 +15,14 @@ namespace BootstrapMvcSample
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            /*routes.MapNavigationRoute<DiskController>("My Disk", c => c.Index());
+            routes.MapNavigationRoute<PropertiesController>("Search", c => c.ListProperties())
+                .AddChildRoute<AccountController>("Search Profile", c => c.SearchProfile())
+                .AddChildRoute<PropertiesController>("Search for Property", ctx => ctx.SearchProperty());
 
-            routes.MapNavigationRoute<AccountController>("Profile", c => c.Index())
-                  .AddChildRoute<AccountController>("Sign Out", c => c.LogOut())
-                ;*/
+            routes.MapNavigationRoute<AccountController>("Account", c =>c.Index())
+                .AddChildRoute<AccountController>("My Profile", c => c.MyProfile())
+                .AddChildRoute<AccountController>("Sign out", c => c.LogOut());
+                ;
         }
     }
 }

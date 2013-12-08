@@ -5,11 +5,11 @@
     Layout = "~/Views/shared/_BootstrapLayout.Login.cshtml";
 }
 
-<div style="text-align: right"> @Html.ActionLink("Registrarse", "Register", null, new { @class = "btn btn-success " })</div>
-<br>
+    <div style="text-align: right"> @Html.ActionLink("Registrarse", "Register", null, new { @class = "btn btn-success " })</div>
+    <br>
 
 <div class="row">
-    
+
     <div class="span4" style="margin-right: 0;">
 
         @using (@Html.BeginForm("LogIn", "Account", FormMethod.Post, new { @class = "form-signin" }))
@@ -30,9 +30,12 @@
 
         }
     </div>
-    <div class="span8" style="margin-left:0; ">
+    
+    <div class="span8" style="margin-left:0; " id='#myimage' onmouseover="changeimage(2)">
         <img src="~/Content/images/banner-grandes-paisajes.jpg" alt="Una foto bonita que no cargo :(">
     </div>
+    
+
 
 </div>
 

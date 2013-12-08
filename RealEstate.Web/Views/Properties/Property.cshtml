@@ -4,42 +4,45 @@
     Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
 }
 <!-- Main hero unit for a primary marketing message or call to action -->
+
+
 <div class="hero-unit">
     <h1>@Model.PropertyName</h1>
     <p>@Model.PropertyDescription</p>
     <p style="text-align:right;"><a class="btn btn-success btn-large">Comprar &raquo;</a></p>
 </div>
 
-<div class="row">
+
     
-    <div id="nav" data-spy="affix" data-offset-top="443">
-        <nav class="navbar navbar-affix-top navbar" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span>Navegacion</span>
-                </button>
-                <a class="brand1" href="#why"><img src=" "></a>
-            </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right">
-                <ul class="nav navbar-nav">
-                    <li><a href="#terreno">Terreno</a></li>
-                    <li><a href="#habitaciones">Habitaciones</a></li>
-                    <li><a href="#sala">Sala</a></li>
-                    <li><a href="#fotos">Fotos</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+        <div id="nav" data-spy="affix" data-offset-top="443" class="span12" style="text-align: center;">
+            <nav class="navbar navbar-affix-top navbar" role="navigation" >
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span>*</span>
+                    </button>
+                    
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse navbar-right" >
+                    <ul class="nav navbar-nav">
+                        <li><a href="#terreno" >Terreno</a></li>
+                        <li><a href="#habitaciones">Habitaciones</a></li>
+                        <li><a href="#sala">Sala</a></li>
+                        <li><a href="#fotos">Fotos</a></li>
+                    </ul>
+                </div>
+            </nav>
+        
+        </div>
     <section id="terreno">
-        <div class="row" style="margin: 50px;">
+        <div class="row" style="margin: 50px; margin-left: 0px;">
             <div class="span4">
                 <h2>Terreno</h2>
                 <p>Area del terreno: @Model.LandArea </p>
-                        <p>Area de construccion: @Model.ConstructionArea </p>
-                                <p>Locacion: @Model.Suburb, @Model.City, @Model.Country </p>
+                    <p>Area de construccion: @Model.ConstructionArea </p>
+                        <p>Locacion: @Model.Suburb, @Model.City, @Model.Country </p>
 
-                                    </div>
-        </div>
+                        </div>
+                    </div>
     </section>
     <section id="habitaciones">
         <div class="row">
@@ -52,7 +55,34 @@
                     </div>
     </section>
     <section id="sala">
-        
-    </section>
+        <div class="row" style="margin: 50px; margin-left: 0px;">
+                <div class="span4">
+                    <h2>Sala</h2>
+                    <p>Area de la sala </p>
+                    <p>WOWOWOW </p>
+                    <p>JOJOJO </p>
 
-</div>
+                </div>
+            </div>
+        </section>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+    var showingImage = true;
+
+    var myVar = setInterval(function () { changeImage(); }, 2000);
+
+    function changeImage() {
+        if (!showingImage) {
+
+            $('.hero-unit').css('background-color', '#2f4f4f');
+            $('.hero-unit').css('background-image', 'url("~/Content/images/Casa.JPG")');
+
+        }
+        else {
+            $('.hero-unit').removeAttr('background-image');
+            $('.hero-unit').css('background', '#0000ff');
+        }
+        showingImage = !showingImage;
+    }
+</script>

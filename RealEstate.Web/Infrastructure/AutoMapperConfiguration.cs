@@ -13,6 +13,7 @@ namespace RealEstate.Web.Infrastructure
             Mapper.CreateMap<Property, ListPropertiesModel>().ForMember(x=>x.Precio, y=>y.MapFrom(o=>o.Price)).ForMember(x=>x.Ciudad, y=>y.MapFrom(o=>o.City)).ForMember(x=>x.Pais,y=>y.MapFrom(o=>o.Country)).ForMember(x=>x.Nombre,y=>y.MapFrom(o=>o.NombrePropiedad)).ForMember(x=>x.Colonia,y=>y.MapFrom(o=>o.Suburb));
             Mapper.CreateMap<Property, PropertyProfileModel>()
                 .ForMember(x => x.PropertyName, y => y.MapFrom(o => o.NombrePropiedad));
+            Mapper.CreateMap<Account, AccountProfileModel>();
         }
     }
 }

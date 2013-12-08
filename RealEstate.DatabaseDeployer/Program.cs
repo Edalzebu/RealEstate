@@ -19,7 +19,7 @@ namespace RealEstate.DatabaseDeployer
         static void Main(string[] args)
         {
             MsSqlConfiguration databaseConfiguration = MsSqlConfiguration.MsSql2008.ShowSql().
-               ConnectionString(x => x.FromConnectionStringWithKey("Remote"));
+               ConnectionString(x => x.FromConnectionStringWithKey("Local"));
 
             DomainDrivenDatabaseDeployer.DatabaseDeployer dd = null;
             ISessionFactory sessionFactory = new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration)

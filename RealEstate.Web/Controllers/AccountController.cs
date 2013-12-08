@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Configuration;
+using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
 using BootstrapMvcSample.Controllers;
@@ -17,6 +20,33 @@ namespace RealEstate.Web.Controllers
         public AccountController(IRepository repository)
         {
             _repository = repository;
+        }
+
+        public ActionResult MyProfile()
+        {
+            var account = _repository.First<Account>(x => x.Email == User.Identity.Name);
+            var model = Mapper.Map<Account, AccountProfileModel>(account);
+            model.ImageUrl = "‪C:/Users/Edwin/Pictures/DSC03029.JPG";
+            var lista = new List<long>();
+            lista.Add(1);
+            lista.Add(2);
+            lista.Add(2);
+            lista.Add(2);
+            model.ListaProperties = lista;
+
+            return View(model);
+        }
+
+        public ActionResult SearchProfile()
+        {
+            return View();
+        }
+        public ActionResult Profile(long id)
+        {
+            var propiedad = _repository.First<Property>(x => x.Id == id);
+            var account = _repository.First<Account>(x => x.Id == propiedad.DueñoId);
+            var model = Mapper.Map<Account, AccountProfileModel>(account);
+            return View(model);
         }
 
         [HttpGet]

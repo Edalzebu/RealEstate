@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using BootstrapMvcSample.Controllers;
@@ -19,6 +21,11 @@ namespace RealEstate.Web.Controllers
         public PropertiesController(IRepository repository)
         {
             _repository = repository;
+        }
+
+        public ActionResult SearchProperty()
+        {
+            return View();
         }
         public ActionResult Index()
         {
@@ -79,17 +86,27 @@ namespace RealEstate.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Profile(long id)
-        {
-            var propiedad = _repository.First<Property>(x => x.Id == id);
-            var account = _repository.First<Account>(x => x.Id == propiedad.DueñoId);
-
-            return View();
-        }
-
+        
         public ActionResult Report(long id)
         {
             return View();
+        }
+
+        public void UploadPictures(List<HttpPostedFileBase> file)
+        {
+            foreach (var file1 in file)
+            {
+                if (file1 != null && file1.ContentLength > 0)
+                {
+                    // extract only the fielname
+                    var fileName = Path.GetFileName(file1.FileName);
+                    // store the file inside ~/App_Data/uploads folder
+                    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                    file1.SaveAs(path);
+                }
+               
+            }
+            
         }
     }
 }

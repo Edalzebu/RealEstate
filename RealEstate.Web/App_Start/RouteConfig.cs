@@ -14,7 +14,7 @@ namespace RealEstate.Web.App_Start
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Account", action = "LogIn", id = UrlParameter.Optional }
+                defaults: new { controller = "Properties", action = "Index", id = UrlParameter.Optional }
             );
 
             

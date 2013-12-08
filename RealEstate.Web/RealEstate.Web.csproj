@@ -223,9 +223,11 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\Logo_homeown.png" />
     <Content Include="Content\images\Paisaje1.jpg" />
+    <Content Include="Content\images\profpic.JPG" />
     <Content Include="Global.asax" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\change-image.js" />
     <Content Include="scripts\html5shiv.js" />
     <Content Include="local.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -276,9 +278,11 @@
     <Content Include="Views\Properties\SellProperty.cshtml" />
     <Content Include="Views\Properties\ShowGallery.cshtml" />
     <Content Include="Views\shared\_BootstrapLayout.Login.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

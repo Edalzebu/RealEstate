@@ -46,8 +46,9 @@ namespace RealEstate.Web.Models
 
 
         //Casa
-        
-        
+        [Display(Name = "Es una casa?")]
+        public bool IsaHouse { get; set; }
+
 
 
     }

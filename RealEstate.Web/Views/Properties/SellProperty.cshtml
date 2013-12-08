@@ -7,38 +7,139 @@
     Layout = "~/Views/shared/_BootstrapLayout.empty.cshtml";
 }
 
-<div style="width: 500px; text-align: center;">
+<div class="row">
+    
+
+    <div class="span6" style="text-align: center;">
     @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
-        <fieldset class="form-horizontal">
-            <legend>Registro de datos de una propiedad </legend>
-            @foreach (var property in Model.VisibleProperties())
-            {
-                if (property.Name != "Imagen")
+    { 
+            @Html.ValidationSummary(true)
+            <fieldset class="form-horizontal">
+                <legend>Registro de datos de una propiedad </legend>
+                @foreach (var property in Model.VisibleProperties())
                 {
-                    using (Html.ControlGroupFor(property.Name))
+                    if (property.Name != "Imagen")
                     {
-                        @Html.Label(property.Name, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.Editor(property.Name, new { @class = "input-xlarge" })
-                            @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
-                        </div>
+                        using (Html.ControlGroupFor(property.Name))
+                        {
+                            @Html.Label(property.Name, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.Editor(property.Name, new { @class = "input-xlarge" })
+                                @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
+                            </div>
+                        }
                     }
+
                 }
+            </fieldset>
+
+
+            <div class="form-actions" style="text-align: right">
+                <button id="botonsubmit" type="submit" class="btn btn-primary">En venta</button>
+                @Html.ActionLink("No Vender", "ListProperties", null, new { @class = "btn " })
+
+            </div>
+
+    }
+    </div>
+            <div class="span6" style="text-align: center;">
+                <br/>
+               @using (Html.BeginForm("UploadPictures", "Properties", FormMethod.Post, new{enctype = "multipart/form-data"}))
+               {
+                   <fieldset class="form-horizontal">
+                       <legend>Fotos </legend>
+                       <input name="file" id="file" type="file" multiple accept="jpg|png"/>
+
+                       <br />
+                       <div id="preview"> </div>
+                       <div id="carousel-example-generic" class="carousel slide span5" data-ride="carousel" hidden>
+                           <!-- Indicators -->
+                           <ol class="carousel-indicators">
+                               <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                               <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                               <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                           </ol>
+
+                           <!-- Wrapper for slides -->
+                           <div class="carousel-inner">
+                               <div class="item active">
+                                   <img src="~/Content/images/Casa.JPG" alt="...">
+                                   <div class="carousel-caption">
+                                       ...
+                                   </div>
+                               </div>
+                               ...
+                           </div>
+
+                           <!-- Controls -->
+                           <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                               <span class="glyphicon glyphicon-chevron-left"></span>
+                           </a>
+                           <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                               <span class="glyphicon glyphicon-chevron-right"></span>
+                           </a>
+                       </div>
+                   </fieldset>
+               }
+        </div>
+
+</div>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+<script type="text/javascript">
+    $("document").ready(function() {
+
+        $("input[id='IsaHouse']").click(function () {
+
+            if ($(this).is(':checked')) {
+                $("#botonsubmit").html('Siguiente');
+                $("button[id='botonsubmit']").props('type', '');
 
             }
-            
-        </fieldset>
-        <div class="form-actions" style="text-align: right">
-        <button type="submit" class="btn btn-primary">En venta</button>
-        @Html.ActionLink("No Vender", "ListProperties", null, new { @class = "btn " })
+            else {
+                $("#botonsubmit").html('Vender');
+                
+            }
+        });
+        $("input[id='file']").change(function() {
+            this.form.submit();
+            handleFiles(this.files);
+           // $("#carousel-example-generic").fadeIn();
+        });
+        
 
-        </div>
-    }
+    });
     
-</div>
+    function handleFiles(files) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
 
+            if (!file.type.match(imageType)) {
+                continue;
+            }
 
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            img.onload = function () {
+                var info = document.createElement('div');
+                info.innerHTML = 'Dimentions: ' + img.width + 'x' + img.height;
+                preview.appendChild(info);
+            };
+
+            var preview = document.getElementById('preview');
+            preview.appendChild(img);
+
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
+
+</script>
 
 

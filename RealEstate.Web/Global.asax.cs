@@ -61,7 +61,7 @@ namespace RealEstate.Web
                                                                           ConnectionString(
                                                                               x =>
                                                                               x.FromConnectionStringWithKey(
-                                                                                  "Remote"));
+                                                                                  "Local"));
             ISessionFactory sessionFactory = new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration)
                 .Build();
 
@@ -101,6 +101,8 @@ namespace RealEstate.Web
             return kernel;
         }
 
+        
+
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
             if (Context.User != null)
@@ -121,4 +123,5 @@ namespace RealEstate.Web
             }
         }
     }
+    
 }
