@@ -1,0 +1,38 @@
+﻿@using BootstrapSupport
+@using Microsoft.Web.Mvc
+
+@model RealEstate.Web.Models.SellPropertyModel
+
+
+    @using (Html.BeginForm("SellProperty","Properties"))
+    { 
+            @Html.ValidationSummary(true)
+            <fieldset class="form-horizontal">
+                <legend>Registro de datos de una propiedad </legend>
+                @foreach (var property in Model.VisibleProperties())
+                {
+                    if (property.Name != "Imagen")
+                    {
+                        using (Html.ControlGroupFor(property.Name))
+                        {
+                            @Html.Label(property.Name, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.Editor(property.Name, new { @class = "input-xlarge" })
+                                @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
+                                                              
+                            </div>
+                        }
+                    }
+
+                }
+            </fieldset>
+
+
+            <div class="form-actions" style="text-align: right">
+                <button id="botonsubmit" type="button" class="btn btn-primary">En venta</button>
+                @Html.ActionLink("No Vender", "ListProperties", null, new { @class = "btn " })
+
+            </div>
+
+    }
+    

@@ -180,6 +180,7 @@
     <Compile Include="BootstrapSupport\HtmlHelpers\Paging.cs" />
     <Compile Include="BootstrapSupport\ViewHelperExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\BootstrapBaseController.cs" />
     <Compile Include="Controllers\ExampleLayoutsController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
@@ -194,6 +195,10 @@
     <Compile Include="Models\AccountInputModel.cs" />
     <Compile Include="Models\AccountLoginModel.cs" />
     <Compile Include="Models\AccountProfileModel.cs" />
+    <Compile Include="Models\Administrator\APropertiesListModel.cs" />
+    <Compile Include="Models\Administrator\AUserListModel.cs" />
+    <Compile Include="Models\Administrator\BanPropertyModel.cs" />
+    <Compile Include="Models\Administrator\BanUserModel.cs" />
     <Compile Include="Models\DiskContentModel.cs" />
     <Compile Include="Models\HomeInputModel.cs" />
     <Compile Include="Models\ListPropertiesModel.cs" />
@@ -280,6 +285,13 @@
     <Content Include="Views\shared\_BootstrapLayout.Login.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\MyProfile.cshtml" />
+    <Content Include="Views\Administrator\AdminCP.cshtml" />
+    <Content Include="Views\Administrator\PropertiesList.cshtml" />
+    <Content Include="Views\Administrator\UsersList.cshtml" />
+    <Content Include="Views\Administrator\DeleteProperty.cshtml" />
+    <Content Include="Views\Administrator\BanProperty.cshtml" />
+    <Content Include="Views\Administrator\BanUser.cshtml" />
+    <Content Include="Views\Properties\SellPropertyForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

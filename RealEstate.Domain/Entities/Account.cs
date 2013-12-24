@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 namespace RealEstate.Domain.Entities
 {
     public class Account : IEntity
@@ -17,5 +18,7 @@ namespace RealEstate.Domain.Entities
         public virtual string GooglePlus { get; set; }
         public virtual string PhoneNumber { get; set; }
         public virtual string Country { get; set; }
-}
+        public virtual DateTime MemberSince { get; set; }
+        public virtual Boolean Banned { get; set; }
+    }
 }

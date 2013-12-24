@@ -14,6 +14,7 @@ namespace RealEstate.Domain.Services
         T Update<T>(T itemToUpdate) where T : class, IEntity;
         void Archive<T>(T itemToArchive);
         IQueryable<T> GetAll<T>() where T : class, IEntity;
+        void Delete<T>(T itemToDelete) where T : class, IEntity;
     }
 
     

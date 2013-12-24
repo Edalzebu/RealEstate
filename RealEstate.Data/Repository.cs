@@ -41,16 +41,24 @@ namespace RealEstate.Data
             _session.Save(itemToCreate);
             return itemToCreate;
         }
-
+        public void Delete<T>(T itemToDelete) where T : class, IEntity
+        {
+            _session.Delete(itemToDelete);
+            _session.Flush();
+            _session.Clear();
+            
+        }
         public T Update<T>(T itemToUpdate) where T : class, IEntity
         {
             _session.Update(itemToUpdate);
+            _session.Flush();
+            _session.Clear();
             return itemToUpdate;
         }
 
         public void Archive<T>(T itemToArchive)
         {
-            throw new NotImplementedException();
+           
         }
 
         public IQueryable<T> GetAll<T>() where T : class, IEntity

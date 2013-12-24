@@ -1,0 +1,92 @@
+﻿@using BootstrapSupport
+@model List<RealEstate.Web.Models.Administrator.APropertiesListModel>
+<div style="text-align:right;">
+   
+   
+    <input type="search" name="searchPTextbox" id="searchPTextbox" />
+    
+    
+</div>
+
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr id="trtitulo">
+            @foreach (var property in Model.VisibleProperties())
+            {
+                <th>
+                    @property.GetLabel().ToSeparatedWords()
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    @{ int index = 0; }
+    @foreach (var model in Model)
+    {
+        ViewData[index.ToString()] = model;
+        <tr id="propiedades-tr">
+            @foreach (var property in model.VisibleProperties())
+            {
+                <td>
+                    @Html.Display(index + "." + property.Name)
+                </td>                    
+            }
+            <td>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                        Action
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @{
+                            var modelo = model;
+                            @Html.TryPartial("_actions", model)                            
+                            var routevalues = model.GetIdValue();  
+                            <li>@Html.ActionLink("Edit", "Edit", routevalues)</li>
+                            <li>@Html.ActionLink("Details", "Details", routevalues)</li>
+                            <li class="divider"></li>
+                            <li><a href="#" data-toggle="modal" onclick="showModal2('#BanPropertyModalContainerID','#BanPropertyModalBodyID', @modelo.id)">Bloquear Propiedad</a></li>
+                            <li><a href="#" class="btn-danger" data-toggle="modal" onclick="showModal2('#BorrarPropiedadModalContainerID','#BorrarPropiedadModalBodyID', @modelo.id)">Borrar Propiedad</a></li>
+                            
+                        }
+                    </ul>
+                </div>
+
+            </td>
+        </tr>
+        index++;
+    }
+    
+</table>
+<div id="BorrarPropiedadModalContainerID" class="modal hide fade" data-url='@Url.Action("DeleteProperty", "Administrator")'> 
+    <div id="BorrarPropiedadModalBodyID"></div> 
+</div>
+<div id="BanPropertyModalContainerID" class="modal hide fade" data-url='@Url.Action("BanProperty", "Administrator")'> 
+    <div id="BanPropertyModalBodyID"></div> 
+</div>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+<script type="text/javascript">
+   
+    $("#searchPTextbox").keypress(function () {
+        var text = $(this).val();
+        $("tr[id^='propiedades']:not(#trtitulo)").hide();
+        $("tr:contains(" + text + ")").fadeIn('slow');
+        
+    });
+    $("#searchPTextbox").blur(function () {
+        if ($(this).val().length == 0) {
+            $("tr").fadeIn();
+        }
+    });
+    function showModal2(modalContainerId, modalBodyId, id) {
+        var url = $(modalContainerId).data('url');
+
+        $.get(url, { id: id }, function (data) {
+            $(modalBodyId).html(data);
+            $(modalContainerId).modal('show');
+        });
+    }
+    
+    </script>
+

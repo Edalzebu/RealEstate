@@ -6,79 +6,76 @@
     ViewBag.Title = "Venta de Propiedad";
     Layout = "~/Views/shared/_BootstrapLayout.empty.cshtml";
 }
+<style>
+  .thumb {
+  
+       margin-top:50px;
+  }
+  #upload-file-container {
+   
+   
+}
+
+#upload-file-container input {
+   filter: alpha(opacity=0);
+   opacity: 0;
+}
+</style>
 
 <div class="row">
     
-
-    <div class="span6" style="text-align: center;">
-    @using (Html.BeginForm())
-    { 
-            @Html.ValidationSummary(true)
-            <fieldset class="form-horizontal">
-                <legend>Registro de datos de una propiedad </legend>
-                @foreach (var property in Model.VisibleProperties())
-                {
-                    if (property.Name != "Imagen")
-                    {
-                        using (Html.ControlGroupFor(property.Name))
-                        {
-                            @Html.Label(property.Name, new { @class = "control-label" })
-                            <div class="controls">
-                                @Html.Editor(property.Name, new { @class = "input-xlarge" })
-                                @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
-                            </div>
-                        }
-                    }
-
-                }
-            </fieldset>
-
-
-            <div class="form-actions" style="text-align: right">
-                <button id="botonsubmit" type="submit" class="btn btn-primary">En venta</button>
-                @Html.ActionLink("No Vender", "ListProperties", null, new { @class = "btn " })
-
-            </div>
-
-    }
+    <div class="span6">
+        <div id="div-Propiedad" class="span6" style="text-align: center;">
+            @{
+                Html.RenderAction("SellPropertyForm");
+            }
+        
+        </div>
+        <div id="div-Casa" class="span6" style="text-align: center;" hidden>
+        <br/>
+        @{
+            Html.RenderAction("SellHouse");
+        }
+        
     </div>
-            <div class="span6" style="text-align: center;">
+    </div>
+    
+
+    
+            <div id="div-fotos" class="span6" style="text-align: center;">
                 <br/>
                @using (Html.BeginForm("UploadPictures", "Properties", FormMethod.Post, new{enctype = "multipart/form-data"}))
                {
                    <fieldset class="form-horizontal">
-                       <legend>Fotos </legend>
-                       <input name="file" id="file" type="file" multiple accept="jpg|png"/>
-
-                       <br />
-                       <div id="preview"> </div>
-                       <div id="carousel-example-generic" class="carousel slide span5" data-ride="carousel" hidden>
-                           <!-- Indicators -->
-                           <ol class="carousel-indicators">
-                               <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                               <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                               <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                           </ol>
-
-                           <!-- Wrapper for slides -->
-                           <div class="carousel-inner">
-                               <div class="item active">
-                                   <img src="~/Content/images/Casa.JPG" alt="...">
-                                   <div class="carousel-caption">
-                                       ...
-                                   </div>
-                               </div>
-                               ...
-                           </div>
-
-                           <!-- Controls -->
-                           <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                               <span class="glyphicon glyphicon-chevron-left"></span>
-                           </a>
-                           <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                               <span class="glyphicon glyphicon-chevron-right"></span>
-                           </a>
+                       <legend style=" margin-left:50%;">Fotos <a id="botonupload" class="btn btn-inverse btn-small" style="margin-left: 70%;"><i class="icon-white icon-upload"></i> Subir Fotos!</a></legend>
+                       <div class="span1" id="upload-file-container" style="text-align:right;">
+                           
+                           <input class="span6" type="file" id="files" name="files[]" multiple />
                        </div>
+                      
+                       <br />
+                       <div id="carousel-example-generic" class="carousel slide thumb" data-ride="carousel" hidden>
+                          <!-- Indicators -->
+                          <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                          </ol>
+
+                          <!-- Wrapper for slides -->
+                          <div id="slidecontainer" class="carousel-inner">
+                                                                                  
+                           
+                          </div>
+
+                          <!-- Controls -->
+                          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
+                          </a>
+                          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
+                          </a>
+                      </div>
                    </fieldset>
                }
         </div>
@@ -87,7 +84,8 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script type="text/javascript">
     $("document").ready(function() {
-
+        
+        
         $("input[id='IsaHouse']").click(function () {
 
             if ($(this).is(':checked')) {
@@ -100,46 +98,81 @@
                 
             }
         });
+        $("button[id='botonsubmit']").click(function() {
+            if ($("input[id='IsaHouse']").is(':checked')) {
+
+                $("#div-Propiedad").animate({
+                    width: "0%",
+                    opacity: 0,
+                    marginLeft: "0in",
+                    fontSize: "3em",
+                    borderWidth: "10px"
+                }, 1500).fadeOut();
+                
+                //$("#div-Propiedad").hide();
+                
+                $("#div-Casa").delay(1500).fadeIn('slow');
+               
+                
+            }
+        });
         $("input[id='file']").change(function() {
-            this.form.submit();
-            handleFiles(this.files);
-           // $("#carousel-example-generic").fadeIn();
+            //this.form.submit();
+            
+            //handleFileSelect(this.files);
+          
+        });
+        $("a[id='botonupload']").click(function () {
+            $('input[id="files"]').trigger('click');
+            
         });
         
-
     });
     
-    function handleFiles(files) {
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var imageType = /image.*/;
+    
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
 
-            if (!file.type.match(imageType)) {
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            // Only process image files.
+            if (!f.type.match('image.*')) {
                 continue;
             }
 
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            img.onload = function () {
-                var info = document.createElement('div');
-                info.innerHTML = 'Dimentions: ' + img.width + 'x' + img.height;
-                preview.appendChild(info);
-            };
-
-            var preview = document.getElementById('preview');
-            preview.appendChild(img);
-
             var reader = new FileReader();
-            reader.onload = (function (aImg) {
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
                 return function (e) {
-                    aImg.src = e.target.result;
+                    // Render thumbnail.
+                    
+                    
+                   var div = document.createElement('div');
+                    div.innerHTML = ['<img src="', e.target.result,
+                                      '" title="', escape(theFile.name), '"/>'].join('');
+                    div.className = "item";
+                    if (i == 0) {
+                        div.className = "item active";
+                        document.getElementById('slidecontainer').appendChild(div, null);
+                    }
+                    else {
+                        document.getElementById('slidecontainer').appendChild(div, null);
+                    }
                 };
-            })(img);
-            reader.readAsDataURL(file);
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
         }
+
+        $("#carousel-example-generic").fadeIn();
+        $("#carousel-example-generic").next();
+        
     }
 
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
 </script>
 
-
+ 

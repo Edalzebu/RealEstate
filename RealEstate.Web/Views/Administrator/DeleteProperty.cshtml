@@ -1,0 +1,29 @@
+﻿@using BootstrapSupport
+@model RealEstate.Web.Models.Administrator.APropertiesListModel
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="myModalLabel">Esta seguro que desea borrar esta propiedad?</h4>
+</div>
+
+@using (Html.BeginForm("DeleteProperty", "Administrator", FormMethod.Post, new { @class = "modal-form" }))
+{
+@Html.ValidationSummary()
+
+<div  class="modal-body">
+    <div class="text-info">
+        <ul>
+            <li>ID: @Html.EditorFor(x=>x.id)</li>
+            <li>Dueño: @Html.EditorFor(x=>x.Owner)</li>
+            <li>Ubicacion: @Html.EditorFor(x=>x.Suburb),@Html.EditorFor(x=>x.City), @Html.EditorFor(x=>x.Country)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button class="btn btn-danger" type="submit">Borrar Propiedad</button>
+</div>
+  
+}

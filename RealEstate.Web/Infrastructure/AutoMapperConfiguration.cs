@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RealEstate.Domain.Entities;
 using RealEstate.Web.Models;
+using RealEstate.Web.Models.Administrator;
 
 namespace RealEstate.Web.Infrastructure
 {
@@ -14,6 +15,12 @@ namespace RealEstate.Web.Infrastructure
             Mapper.CreateMap<Property, PropertyProfileModel>()
                 .ForMember(x => x.PropertyName, y => y.MapFrom(o => o.NombrePropiedad));
             Mapper.CreateMap<Account, AccountProfileModel>();
+
+            Mapper.CreateMap<Property, APropertiesListModel>().ForMember(x => x.City, y => y.MapFrom(o => o.City)).ForMember(x => x.Country, y => y.MapFrom(o => o.Country));
+            Mapper.CreateMap<Account, AUserListModel>();
+            Mapper.CreateMap<Property, BanPropertyModel>();
+            Mapper.CreateMap<Account, BanUserModel>();
+            
         }
     }
 }

@@ -47,6 +47,14 @@ namespace RealEstate.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult SellPropertyForm()
+        {
+            var model = new SellPropertyModel();
+            model.StartingDate = DateTime.Now;
+            return PartialView(model);
+        }
+
+        [HttpGet]
         public ActionResult SellProperty()
         {
             var model = new SellPropertyModel();
@@ -66,7 +74,7 @@ namespace RealEstate.Web.Controllers
             return RedirectToAction("ListProperties", "Properties");
         }
 
-        public ActionResult SellHouse(long id)
+        public ActionResult SellHouse()
         {
             return PartialView(new SellHouseModel());
         }

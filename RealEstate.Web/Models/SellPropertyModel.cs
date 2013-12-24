@@ -34,10 +34,13 @@ namespace RealEstate.Web.Models
         [Required(ErrorMessage = "El pais es necesario")]
         [Display(Name = "Pais")]
         public string Country { get; set; }
+
         [Display(Name = "Nombre Propiedad (Optional)")]
         public string PropertyName { get; set; }
+
         [HiddenInput(DisplayValue = true)]
         [Display(Name = "Inicio la venta")]
+        [DataType(DataType.DateTime)]
         public DateTime StartingDate { get; set; }
 
         [Display(Name = "Descripcion")]

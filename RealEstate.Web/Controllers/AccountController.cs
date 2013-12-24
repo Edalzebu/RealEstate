@@ -60,12 +60,20 @@ namespace RealEstate.Web.Controllers
         {
             if (CheckCuentaExiste(model.Email))
             {
-                if (CheckCredenciales(model) != null)
+                if (!CheckCuentaBanned(model.Email))
                 {
-                    FormsAuthentication.SetAuthCookie(model.Email,model.RememberMe);
-                    return RedirectToAction("ListProperties", "Properties");
+                    if (CheckCredenciales(model) != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+                        return RedirectToAction("ListProperties", "Properties");
+                    }
+                    Error("La clave que ingreso no es la correcta para esa cuenta.");
                 }
-                Error("La clave que ingreso no es la correcta para esa cuenta.");
+                else
+                {
+                    Error("Esa cuenta fue prohibida por un administrador, por violar los terminos de uso de la pagina.");
+                }
+                
             }
             else
             {
@@ -99,7 +107,7 @@ namespace RealEstate.Web.Controllers
                     if (model.Password == model.ConfirmPassword)
                     {
                         var nuevaCuenta = Mapper.Map<AccountInputModel, Account>(model);
-
+                        nuevaCuenta.MemberSince = DateTime.Now;
                         _repository.Create(nuevaCuenta);
 
                         Success("La cuenta se ha registrado correctamente");
@@ -158,6 +166,11 @@ namespace RealEstate.Web.Controllers
 
 
         //Funciones Auxiliares
+        public bool CheckCuentaBanned(string email)
+        {
+            var cuenta = _repository.First<Account>(x=>x.Email == email);
+            return cuenta.Banned;
+        }
         public bool CheckCuentaExiste(string email)
         {
             var account = _repository.First<Account>(x => x.Email == email);

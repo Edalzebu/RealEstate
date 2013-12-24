@@ -16,5 +16,6 @@ namespace RealEstate.Domain.Entities
         public virtual string NombrePropiedad { get; set; }
         public virtual string PropertyDescription { get; set; }
         public virtual DateTime StartingDate { get; set; }
+        public virtual bool Banned { get; set; }
     }
 }

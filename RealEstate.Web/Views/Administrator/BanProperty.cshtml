@@ -1,0 +1,37 @@
+﻿@model RealEstate.Web.Models.Administrator.BanPropertyModel
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="myModalLabel">Esta seguro que desea bloquear esta propiedad?</h4>
+</div>
+
+@using (Html.BeginForm("BanProperty", "Administrator", FormMethod.Post, new { @class = "modal-form" }))
+{
+@Html.ValidationSummary()
+
+    <div  class="modal-body">
+        <p> Al banear la propiedad se le enviara un correo a el dueño informando porque ha sido prohibida su propiedad.</p>
+        <div class="text-info">
+            <ul>
+                <li>ID: @Model.id</li>
+                <li>Dueño: @Model.Owner</li>
+                <li>Ubicacion: @Model.Suburb,@Model.City, @Model.Country</li>
+            </ul>
+        </div>
+        <fieldset class="form-horizontal">
+            <legend>Razon</legend>
+            @Html.LabelFor(x=>x.BanReason, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(x=>x.BanReason, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(x=>x.BanReason, null, new { @class = "help-inline" })
+            </div>
+        </fieldset>
+    </div>
+
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button class="btn btn-danger" type="submit">Borrar Propiedad</button>
+</div>
+
+}

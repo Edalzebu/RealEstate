@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Venta de Propiedad";
+    Layout = "~/Views/shared/_BootstrapLayout.empty.cshtml"; 
+}
+<style>
+    .titulos {
+        color: #1e6ba3;
+        
+    }
+</style>
+
+
+
+<div class="row"> 
+   <ul class="nav nav-tabs affix" data-spy="affix" data-offset-top="190">
+    <li class="active" id="li-actividad"><a >Actividad</a></li>
+    <li id="li-usuarios"><a>Usuarios</a></li>
+    <li id="li-propiedades"><a >Propiedades</a></li>
+    <li id="li-reportes"><a >Reportes</a></li>
+       
+</ul>
+    <div id="tab-actividad" >       
+        <h1 class="titulos">Actividad</h1>
+        <p>Usuarios que se conectaron hoy:</p>
+        <p>Usuarios Registrados hoy: </p>
+        <p>Promedio de conexiones de usuarios:</p>
+     </div>
+    <div id="tab-usuarios" hidden>
+       
+        
+        @{
+            Html.RenderAction("UsersList", "Administrator");
+        }        
+        
+    </div>
+    <div id="tab-propiedades" hidden>
+       
+       
+        @{
+            Html.RenderAction("PropertiesList", "Administrator");
+        }
+        
+    </div>
+    <div id="tab-reportes" hidden>
+       
+        
+        <p>Properties Reports:</p>
+        <p>User Reports: </p>
+        <p> <a class="btn btn-inverse btn-small">Property Reports</a> <a class="btn btn-inverse btn-small">Users Reports</a></p>
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
+<script type="text/javascript">
+
+    $("li").click(function () {
+        $("li").removeClass("active");
+        this.className = "active";     
+    });// Funcion para dar efecto de cambio de tabs
+    $("#li-actividad").click(function () {
+        $("div[id^='tab']").hide();
+        $("#tab-actividad").fadeIn();
+       
+    });
+    $("#li-usuarios").click(function () {
+        $("div[id^='tab']").hide();
+        $("#tab-usuarios").fadeIn();
+
+    });
+    $("#li-propiedades").click(function () {
+        $("div[id^='tab']").hide();
+        $("#tab-propiedades").fadeIn();
+
+    });
+    $("#li-reportes").click(function () {
+        $("div[id^='tab']").hide();
+        $("#tab-reportes").fadeIn();
+
+    });
+</script>
