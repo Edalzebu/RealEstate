@@ -49,16 +49,14 @@ namespace RealEstate.Web.Controllers
         [HttpGet]
         public ActionResult SellPropertyForm()
         {
-            var model = new SellPropertyModel();
-            model.StartingDate = DateTime.Now;
+            var model = new SellPropertyModel {StartingDate = DateTime.Now};
             return PartialView(model);
         }
 
         [HttpGet]
         public ActionResult SellProperty()
         {
-            var model = new SellPropertyModel();
-            model.StartingDate = DateTime.Now;
+            var model = new SellPropertyModel {StartingDate = DateTime.Now};
             return View(model);
         }
         
