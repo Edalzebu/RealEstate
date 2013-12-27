@@ -37,9 +37,29 @@ namespace RealEstate.Web.Controllers
             var properties = _repository.GetAll<Property>();
             foreach (var property in properties)
             {
-                var model = Mapper.Map<Property, ListPropertiesModel>(property);
-                model.Owner = _repository.First<Account>(x => x.Id == property.DueñoId).Username;
-                model.ImageUrl = "Test.jpg";
+                ListPropertiesModel model;
+                if (property.IsaHouse)
+                {
+                    var property1 = property;
+                    var house = _repository.First<House>(x => x.PropertyId == property1.Id);
+                    model = Mapper.Map<Property, ListPropertiesModel>(property);
+                    model.Kitchens = house.Kitchens;
+                    model.Bedrooms = house.Bedrooms;
+                    model.Floors = house.Floors;
+                    model.GarageFor = house.GarageFor;
+                    model.LivingRooms = house.LivingRooms;
+
+                    /*
+                     *Creo que aqui tuvieramos que hacer que House herede de Property, pero hay que ver que pedo con nhibernate;
+                     * */
+                }
+                else
+                {
+                    model = Mapper.Map<Property, ListPropertiesModel>(property);
+                    model.Owner = _repository.First<Account>(x => x.Id == property.DueñoId).Username;
+                    model.ImageUrl = "Test.jpg";
+                }
+                
                 
                 listcontent.Add(model);
             }
@@ -60,18 +80,39 @@ namespace RealEstate.Web.Controllers
             return View(model);
         }
         
-        [HttpPost]
-        public ActionResult SellProperty(SellPropertyModel propertyModel)
+       [HttpPost]
+        public ActionResult SellProperty(SellPropertyModel propertyModel, SellHouseModel houseModel, List<HttpPostedFileBase> files)
         {
-            var nuevaPropiedad = Mapper.Map<SellPropertyModel,Property>(propertyModel);
-            var account = _repository.First<Account>(x => x.Email == User.Identity.Name);
-            nuevaPropiedad.DueñoId = account.Id;
-            _repository.Create(nuevaPropiedad);
 
-            Success("Se ha creado la propiedad");
+           if (CheckIfHouseModelHasUsefulData(houseModel))
+           {
+               var property = Mapper.Map<SellPropertyModel, Property>(propertyModel);
+               var casa = Mapper.Map<Property, House>(property);
+               
+               _repository.Create(casa);
+           }
+
+
+
+
+
+
+
+            var propiedad = Mapper.Map<SellPropertyModel, Property>(propertyModel);
+            propiedad.IsaHouse = CheckIfHouseModelHasUsefulData(houseModel);
+            propiedad.DueñoId = _repository.First<Account>(x => x.Email == User.Identity.Name).Id;
+            var propiedadconid = _repository.Create(propiedad);
+            Success("Propiedad en venta!");
+            if (!CheckIfHouseModelHasUsefulData(houseModel)) return RedirectToAction("ListProperties", "Properties");
+            var house = Mapper.Map<SellHouseModel, House>(houseModel);
+            house.PropertyId = propiedadconid.Id;
+            _repository.Create(house);
+            /*
+             * Falta agregar como se van a guardar las imagenes so keep it in mind.
+             * 
+            */
             return RedirectToAction("ListProperties", "Properties");
         }
-
         public ActionResult SellHouse()
         {
             return PartialView(new SellHouseModel());
@@ -113,6 +154,16 @@ namespace RealEstate.Web.Controllers
                
             }
             
+        }
+
+        public bool CheckIfHouseModelHasUsefulData(SellHouseModel model)
+        {
+            if (model.Bedrooms == 0 && model.CarsSpace == 0 && model.Garage == false && model.LivingRooms == 0 &&
+                model.NumberofFloors == 0 && model.Pool == false)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

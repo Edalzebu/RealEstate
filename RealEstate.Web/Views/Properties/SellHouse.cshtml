@@ -1,12 +1,11 @@
 ﻿@using BootstrapSupport
 @model RealEstate.Web.Models.SellHouseModel
 
-<legend>Informacion de la casa</legend>
-    @using (Html.BeginForm("SellHouse", "Properties"))
-    {
+
+   
          @Html.ValidationSummary(true)
         <fieldset class="form-horizontal">
-            
+            <legend>Informacion de la casa</legend>
             @foreach (var property in Model.VisibleProperties())
             {
                 if (property.Name != "Imagen")
@@ -23,4 +22,4 @@
 
             }
             </fieldset>
-    }
+    

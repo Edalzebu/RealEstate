@@ -20,5 +20,12 @@ namespace RealEstate.Web.Models
         [Display(Name = "Comienza la venta")]
         public DateTime StartingDate { get; set; }
 
+        public bool IsaHouse { get; set; }
+        public int Floors { get; set; }
+        public int Bedrooms { get; set; }
+        public int GarageFor { get; set; }
+        public int LivingRooms { get; set; }
+        public int Kitchens { get; set; }
+
     }
 }

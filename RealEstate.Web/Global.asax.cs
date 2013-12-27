@@ -61,7 +61,7 @@ namespace RealEstate.Web
                                                                           ConnectionString(
                                                                               x =>
                                                                               x.FromConnectionStringWithKey(
-                                                                                  "Remote"));
+                                                                                  "Local"));
             ISessionFactory sessionFactory = new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration)
                 .Build();
 
@@ -95,6 +95,7 @@ namespace RealEstate.Web
             kernel.Load(Assembly.GetCallingAssembly());
             kernel.Bind<IRepository>().To<Repository>();
            kernel.Bind<ISession>().ToMethod(x => SessionFactory.GetCurrentSession());
+            
             kernel.Bind<IMappingEngine>().ToConstant(Mapper.Engine);
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
 

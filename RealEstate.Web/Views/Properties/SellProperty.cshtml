@@ -21,81 +21,85 @@
    opacity: 0;
 }
 </style>
-
-<div class="row">
+@using (Html.BeginForm("SellProperty", "Properties", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
     
-    <div class="span6">
-        <div id="div-Propiedad" class="span6" style="text-align: center;">
-            @{
-                Html.RenderAction("SellPropertyForm");
-            }
+        <div class="span6">
+            <div id="div-Propiedad" class="span6" style="text-align: center;">
+                @{
+                    Html.RenderAction("SellPropertyForm");
+                }
         
+            </div>
+            <div id="div-Casa" class="span6" style="text-align: center;" hidden>
+              @{
+                    Html.RenderAction("SellHouse");
+                }
+        
+            </div>
         </div>
-        <div id="div-Casa" class="span6" style="text-align: center;" hidden>
-        <br/>
-        @{
-            Html.RenderAction("SellHouse");
-        }
-        
-    </div>
-    </div>
     
 
     
-            <div id="div-fotos" class="span6" style="text-align: center;">
-                <br/>
-               @using (Html.BeginForm("UploadPictures", "Properties", FormMethod.Post, new{enctype = "multipart/form-data"}))
-               {
-                   <fieldset class="form-horizontal">
-                       <legend style=" margin-left:50%;">Fotos <a id="botonupload" class="btn btn-inverse btn-small" style="margin-left: 70%;"><i class="icon-white icon-upload"></i> Subir Fotos!</a></legend>
-                       <div class="span1" id="upload-file-container" style="text-align:right;">
+        <div id="div-fotos" class="span6" style="text-align: center;">
+            <br/>
+               
+            <fieldset class="form-horizontal">
+                <legend style="margin-left: 50%;">Fotos <a id="botonupload" class="btn btn-inverse btn-small" style="margin-left: 70%;"><i class="icon-white icon-upload"></i> Subir Fotos!</a></legend>
+                <div class="span1" id="upload-file-container" style="text-align: right;">
                            
-                           <input class="span6" type="file" id="files" name="files[]" multiple />
-                       </div>
+                    <input class="span6" type="file" id="files" name="files" multiple />
+                </div>
                       
-                       <br />
-                       <div id="carousel-example-generic" class="carousel slide thumb" data-ride="carousel" hidden>
-                          <!-- Indicators -->
-                          <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                          </ol>
+                <br />
+                <div id="carousel-example-generic" class="carousel slide thumb" data-ride="carousel" hidden>
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
 
-                          <!-- Wrapper for slides -->
-                          <div id="slidecontainer" class="carousel-inner">
+                    <!-- Wrapper for slides -->
+                    <div id="slidecontainer" class="carousel-inner">
                                                                                   
                            
-                          </div>
+                    </div>
 
-                          <!-- Controls -->
-                          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
-                          </a>
-                          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
-                          </a>
-                      </div>
-                   </fieldset>
-               }
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-left"><img src="http://www.clker.com/cliparts/y/m/X/o/s/R/down-arrow-circle-hi.png" alt="flecha!"/></span>
+                    </a>
+                </div>
+            </fieldset>
+               
         </div>
 
-</div>
+    </div>
+     <div class="form-actions" style="text-align: right">
+        <button id="botonsubmit" type="submit" class="btn btn-primary">En venta</button>
+        @Html.ActionLink("No Vender", "ListProperties", null, new { @class = "btn " })
+
+    </div>
+}
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"> </script>
 <script type="text/javascript">
     $("document").ready(function() {
-        
-        
-        $("input[id='IsaHouse']").click(function () {
+
+
+        $("input[id='IsaHouse']").click(function() {
 
             if ($(this).is(':checked')) {
                 $("#botonsubmit").html('Siguiente');
                 $("button[id='botonsubmit']").props('type', '');
 
-            }
-            else {
+            } else {
                 $("#botonsubmit").html('Vender');
-                
+
             }
         });
         $("button[id='botonsubmit']").click(function() {
@@ -108,13 +112,18 @@
                     fontSize: "3em",
                     borderWidth: "10px"
                 }, 1500).fadeOut();
-                
+
                 //$("#div-Propiedad").hide();
-                
+
                 $("#div-Casa").delay(1500).fadeIn('slow');
-               
-                
+                $("#botonsubmit").html('Vender');
+
+
             }
+        });
+        $("#div-Casa").click(function()
+        {
+            $("#botonsubmit").prop('type', 'submit')
         });
         $("input[id='file']").change(function() {
             //this.form.submit();

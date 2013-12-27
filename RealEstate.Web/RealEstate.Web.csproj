@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\DenyAnonymousAccessPolicyViolationHandler.cs" />
+    <Compile Include="Infrastructure\ExtendedMethods.cs" />
     <Compile Include="Infrastructure\FluentSecurityConfig.cs" />
     <Compile Include="Infrastructure\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Infrastructure\RequireRolePolicyViolationHandler.cs" />
