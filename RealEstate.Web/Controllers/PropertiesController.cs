@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -8,6 +9,7 @@ using BootstrapMvcSample.Controllers;
 using RealEstate.Domain.Entities;
 using RealEstate.Domain.Services;
 using RealEstate.Web.Models;
+using Omu.ValueInjecter;
 
 namespace RealEstate.Web.Controllers
 {
@@ -35,32 +37,30 @@ namespace RealEstate.Web.Controllers
         {
             var listcontent = new List<ListPropertiesModel>();
             var properties = _repository.GetAll<Property>();
+            var houses = _repository.GetAll<House>();
+            /*foreach (var property in properties)
+            {
+                
+            }
+            foreach (var house in houses)
+            {
+                
+            }*/
             foreach (var property in properties)
             {
                 ListPropertiesModel model;
-                if (property.IsaHouse)
+                model = Mapper.Map<Property, ListPropertiesModel>(property);
+                model.Owner = _repository.First<Account>(x => x.Id == property.DueñoId).Username;
+                model.ImageUrl = "Test.jpg";
+                model.IsaHouse = false;
+                
+                foreach (var house in houses.Where(house => property.Id == house.Id))
                 {
-                    var property1 = property;
-                    var house = _repository.First<House>(x => x.PropertyId == property1.Id);
-                    model = Mapper.Map<Property, ListPropertiesModel>(property);
-                    model.Kitchens = house.Kitchens;
-                    model.Bedrooms = house.Bedrooms;
-                    model.Floors = house.Floors;
-                    model.GarageFor = house.GarageFor;
-                    model.LivingRooms = house.LivingRooms;
-
-                    /*
-                     *Creo que aqui tuvieramos que hacer que House herede de Property, pero hay que ver que pedo con nhibernate;
-                     * */
-                }
-                else
-                {
-                    model = Mapper.Map<Property, ListPropertiesModel>(property);
-                    model.Owner = _repository.First<Account>(x => x.Id == property.DueñoId).Username;
+                    model = Mapper.Map<House, ListPropertiesModel>(house);
+                    model.IsaHouse = true;
+                    model.Owner = _repository.First<Account>(x => x.Id == house.DueñoId).Username;
                     model.ImageUrl = "Test.jpg";
                 }
-                
-                
                 listcontent.Add(model);
             }
             return View(listcontent);
@@ -76,7 +76,7 @@ namespace RealEstate.Web.Controllers
         [HttpGet]
         public ActionResult SellProperty()
         {
-            var model = new SellPropertyModel {StartingDate = DateTime.Now};
+            var model = new SellPropertyModel { StartingDate = DateTime.Now };
             return View(model);
         }
         
@@ -84,30 +84,37 @@ namespace RealEstate.Web.Controllers
         public ActionResult SellProperty(SellPropertyModel propertyModel, SellHouseModel houseModel, List<HttpPostedFileBase> files)
         {
 
+           var property = Mapper.Map<SellPropertyModel, Property>(propertyModel);
+           property.DueñoId = _repository.First<Account>(x => x.Email == User.Identity.Name).Id;
+           property.Banned = false;
            if (CheckIfHouseModelHasUsefulData(houseModel))
            {
-               var property = Mapper.Map<SellPropertyModel, Property>(propertyModel);
-               var casa = Mapper.Map<Property, House>(property);
-               
+               var casa = Mapper.Map<SellHouseModel, House>(houseModel);
+               //casa.InjectFrom(property); ** Doesn't work as intended, research needed. **
+
+               casa.Id = property.Id;
+               casa.IsArchived = false;
+               casa.LandArea = property.LandArea;
+               casa.ConstructionArea = property.ConstructionArea;
+               casa.Price = property.Price;
+               casa.Suburb = property.Suburb;
+               casa.City = property.City;
+               casa.Country = property.Country;
+               casa.DueñoId = property.DueñoId;
+               casa.NombrePropiedad = property.NombrePropiedad;
+               casa.PropertyDescription = property.PropertyDescription;
+               casa.StartingDate = property.StartingDate;
+               casa.Banned = false;
                _repository.Create(casa);
+               Success("Casa en venta");
+           }
+           else
+           {
+               Success("Propiedad en venta");
+               _repository.Create(property);
            }
 
-
-
-
-
-
-
-            var propiedad = Mapper.Map<SellPropertyModel, Property>(propertyModel);
-            propiedad.IsaHouse = CheckIfHouseModelHasUsefulData(houseModel);
-            propiedad.DueñoId = _repository.First<Account>(x => x.Email == User.Identity.Name).Id;
-            var propiedadconid = _repository.Create(propiedad);
-            Success("Propiedad en venta!");
-            if (!CheckIfHouseModelHasUsefulData(houseModel)) return RedirectToAction("ListProperties", "Properties");
-            var house = Mapper.Map<SellHouseModel, House>(houseModel);
-            house.PropertyId = propiedadconid.Id;
-            _repository.Create(house);
-            /*
+           /*
              * Falta agregar como se van a guardar las imagenes so keep it in mind.
              * 
             */

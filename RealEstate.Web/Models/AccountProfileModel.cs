@@ -13,6 +13,10 @@ namespace RealEstate.Web.Models
         public string MemberSince { get; set; }
         public string PropertiesSold { get; set; }
         public string Contact { get; set; }
-        public List<long> ListaProperties { get; set; } 
+        public List<Property> ListaProperties { get; set; }
+        public List<House> ListCasas { get; set; } 
+        public string Twitter { get; set; }
+        public string Facebook { get; set; }
+        public string Googleplus { get; set; }
     }
 }

@@ -68,21 +68,11 @@
 
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript">
-    var showingImage = true;
 
-    var myVar = setInterval(function () { changeImage(); }, 2000);
-
-    function changeImage() {
-        if (!showingImage) {
-
-            $('.hero-unit').css('background-color', '#2f4f4f');
-            $('.hero-unit').css('background-image', 'url("~/Content/images/Casa.JPG")');
-
-        }
-        else {
-            $('.hero-unit').removeAttr('background-image');
-            $('.hero-unit').css('background', '#0000ff');
-        }
-        showingImage = !showingImage;
-    }
+    $("document").ready(function ()
+    {
+        $('.hero-unit').css('background-image', 'url("~/Content/images/Casa.JPG");');
+        
+    });
+    
 </script>

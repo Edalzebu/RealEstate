@@ -7,7 +7,7 @@ namespace RealEstate.Domain.Entities
 {
     public class House : Property
     {
-        public virtual long PropertyId { get; set; }
+       
         public virtual int Floors { get; set; }
         public virtual bool Pool { get; set; }
         public virtual int Bedrooms { get; set; }

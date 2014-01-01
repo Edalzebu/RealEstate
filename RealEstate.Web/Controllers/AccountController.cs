@@ -27,12 +27,11 @@ namespace RealEstate.Web.Controllers
             var account = _repository.First<Account>(x => x.Email == User.Identity.Name);
             var model = Mapper.Map<Account, AccountProfileModel>(account);
             model.ImageUrl = "‪C:/Users/Edwin/Pictures/DSC03029.JPG";
-            var lista = new List<long>();
-            lista.Add(1);
-            lista.Add(2);
-            lista.Add(2);
-            lista.Add(2);
+            var lista = new List<Property>();
+            var listacasas = new List<House>();
+           
             model.ListaProperties = lista;
+            model.ListCasas = listacasas;
 
             return View(model);
         }
